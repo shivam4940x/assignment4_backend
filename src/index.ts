@@ -4,7 +4,7 @@ import { cors } from "hono/cors";
 import signin from "./routers/signin";
 import signup from "./routers/signup";
 import list from "./routers/list";
-
+const port  = process.env.PORT
 const app = new Hono();
 app.use(
   cors({
@@ -21,9 +21,15 @@ app.use(
     credentials: true,
   })
 );
-
+app.get("/", (c: any) => {
+  return c.json("Hellow guys welcome to my blog");
+});
 app.route("/signin", signin);
 app.route("/signup", signup);
-app.route("/list", list);
+app.route("/list", list)
 
-export default app;
+
+export default {
+  port: port,
+  fetch: app.fetch,
+}; 
